@@ -11,7 +11,6 @@ function App() {
     <div className="container">
         <Search onChange={handleSearchChange}/>
         <CurrentWeather/>
-        <p>You are a doggo</p>
     </div>
   );
 }

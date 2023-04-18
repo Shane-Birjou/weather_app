@@ -4,26 +4,47 @@ import { GEO_API_URL, geoApiOptions } from "../Api";
 //900d1b6ab1187d2a6fbfea630fc96b91
 
 
-const Search = (onSearchChange) => {
+const Search = ({onSearchChange}) => {
 
     const [search, setSearch] = useState(null);
 
-    const loadOptions = async(inputValue) => {
-        return fetch(`${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`, geoApiOptions)
-            .then(response => response.json())
+    const loadOptions = (inputValue) => {
+        return fetch(
+            `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
+             geoApiOptions
+             )
+            .then((response) => response.json())
             .then((response) => {
                 return {
                     options: response.data.map((city) => {
                         return {
-                            value: `${city.lattitude} ${city.longitude}`,
-                            label: `${city.name}, ${city.countryCode}`
+                            value: `${city.latitude} ${city.longitude}`,
+                            label: `${city.name}, ${city.countryCode}`,
                         }
                     })
                 }
                  
             })
-            .catch(err => console.error(err));
+            
     }
+
+    // const loadOptions = (inputValue) => {
+    //     return fetch(
+    //       `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
+    //       geoApiOptions
+    //     )
+    //       .then((response) => response.json())
+    //       .then((response) => {
+    //         return {
+    //           options: response.data.map((city) => {
+    //             return {
+    //               value: `${city.latitude} ${city.longitude}`,
+    //               label: `${city.name}, ${city.countryCode}`,
+    //             };
+    //           }),
+    //         };
+    //       });
+    //   };
 
     const handleOnChange = (searchData) => {
         setSearch(searchData);
@@ -38,6 +59,7 @@ const Search = (onSearchChange) => {
             loadOptions={loadOptions}
         />
     )
+
 }
 
 export default Search;
